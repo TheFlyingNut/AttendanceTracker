@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "51988274010",
+    "project_id": "attendencetracker-c7c0c",
+    "storage_bucket": "attendencetracker-c7c0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51988274010:android:e905d060256991e65ff163",
+        "android_client_info": {
+          "package_name": "com.example.attendance"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXK2BYj0x8LI8ep6JxUfEipNR6lE9LTjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51988274010:android:50a78b95b0c0767d5ff163",
+        "android_client_info": {
+          "package_name": "com.example.hotspotmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXK2BYj0x8LI8ep6JxUfEipNR6lE9LTjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:51988274010:android:db25433602de997d5ff163",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXK2BYj0x8LI8ep6JxUfEipNR6lE9LTjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
