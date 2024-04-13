@@ -5,5 +5,6 @@
     <string name="password">Password</string>
     <string name="click_to_register">Click to Register</string>
     <string name="register">Register</string>
-    <string name="click_to_login" >Click to Login</string>
+    <string name="click_to_login">Click to Login</string>
+    <string name="mac_address_xx_xx_xx_xx_xx_xx">MAC Address: XX:XX:XX:XX:XX:XX</string>
 </resources>

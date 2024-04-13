@@ -1,0 +1,111 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attendance Form"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_edittext"/>
+
+        <EditText
+            android:id="@+id/editTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_edittext"/>
+
+        <EditText
+            android:id="@+id/editTextSapId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="SAP ID"
+            android:inputType="number"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_edittext"/>
+
+        <EditText
+            android:id="@+id/editTextMacAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="MAC Address"
+            android:inputType="text"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/custom_edittext"/>
+
+        <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:text="Submit"
+            android:textColor="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/textViewMacAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/mac_address_xx_xx_xx_xx_xx_xx" <!-- Placeholder text -->
+            android:textSize="18sp"
+            android:textColor="#000000" <!-- Text color -->
+            android:textStyle="bold" <!-- Bold text -->
+            android:padding="8dp" <!-- Padding around the text -->
+            android:background="@drawable/custom_edittext" <!-- Background drawable -->
+            android:gravity="center" <!-- Center text horizontally -->
+            android:layout_gravity="center" <!-- Center text vertically -->
+            android:elevation="4dp" <!-- Shadow elevation -->
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="16dp"
+            />
+
+
+        <Button
+            android:id="@+id/buttonShowMacAddress"
+            android:layout_width="341dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_background"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="12dp"
+            android:text="Show MAC Address"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</ScrollView>

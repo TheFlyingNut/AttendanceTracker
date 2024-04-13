@@ -15,6 +15,7 @@ import android.net.wifi.p2p.WifiP2pGroup;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -164,8 +165,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(int i) {
-                outputLog("hotspot failed to start. reason: " + String.valueOf(i) + "\n");
+            public void onFailure(int reason) {
+                if (reason == WifiP2pManager.BUSY) {
+                    outputLog("hotspot failed to start. reason: BUSY. Retrying...\n");
+                    // Retry after a delay
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            onButtonStartTapped(view);
+                        }
+                    }, 5000); // Retry after 5 seconds
+                } else {
+                    outputLog("hotspot failed to start. reason: " + String.valueOf(reason) + "\n");
+                }
             }
         });
     }
