@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp">
 
     <LinearLayout
@@ -76,19 +77,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/mac_address_xx_xx_xx_xx_xx_xx" <!-- Placeholder text -->
+            android:text="MAC Address: XX:XX:XX:XX:XX:XX"
             android:textSize="18sp"
-            android:textColor="#000000" <!-- Text color -->
-            android:textStyle="bold" <!-- Bold text -->
-            android:padding="8dp" <!-- Padding around the text -->
-            android:background="@drawable/custom_edittext" <!-- Background drawable -->
-            android:gravity="center" <!-- Center text horizontally -->
-            android:layout_gravity="center" <!-- Center text vertically -->
-            android:elevation="4dp" <!-- Shadow elevation -->
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="16dp"
-            />
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:padding="8dp"
+            android:background="@drawable/textview_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonShowMacAddress" />
 
 
         <Button
