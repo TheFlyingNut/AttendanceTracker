@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:scrollbars="horizontal">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -38,7 +37,7 @@
         android:id="@+id/buttonStop"
         android:layout_width="147dp"
         android:layout_height="58dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="72dp"
         android:onClick="onButtonStopTapped"
         android:text="Stop"
         app:layout_constraintStart_toEndOf="@+id/textView4"
@@ -94,11 +93,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editSSID" />
 
+
     <Button
         android:id="@+id/buttonStart"
         android:layout_width="147dp"
         android:layout_height="58dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="72dp"
         android:onClick="onButtonStartTapped"
         android:text="Start"
         app:layout_constraintEnd_toStartOf="@+id/textView4"
@@ -108,7 +108,7 @@
         android:id="@+id/radioGroup"
         android:layout_width="247dp"
         android:layout_height="39dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="24dp"
         android:checkedButton="@id/radioButton2G"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,8 +118,8 @@
 
         <RadioButton
             android:id="@+id/radioButton2G"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
+            android:layout_width="122dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="2.4GHz"
             android:textSize="20sp" />
@@ -133,13 +133,46 @@
 
     </RadioGroup>
 
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginEnd="32dp"
+        android:text="Select Date:"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+
+        app:layout_constraintBottom_toTopOf="@+id/buttonStart"
+        app:layout_constraintEnd_toStartOf="@+id/datePickerButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.488" />
+
+    <Button
+        android:id="@+id/datePickerButton"
+        style="?android:spinnerStyle"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:onClick="openDatePicker"
+        android:text="JAN 01 2024"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonStop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="21dp"
         android:layout_height="52dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
@@ -147,37 +180,48 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="52dp"
         android:text="Log"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textViewLog"
-        android:layout_width="402dp"
-        android:layout_height="223dp"
+        android:layout_width="407dp"
+        android:layout_height="173dp"
         android:background="@drawable/border"
         android:scrollbars="vertical"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <Button
         android:id="@+id/buttonUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_width="106dp"
+        android:layout_height="63dp"
         android:onClick="onButtonUpdateTapped"
         android:text="Update"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSubmit"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDevices" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="137dp"
+        android:layout_height="62dp"
+        android:layout_marginEnd="56dp"
+        android:onClick="updateFirebase"
+        android:text="UPDATE DATABASE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDevices"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

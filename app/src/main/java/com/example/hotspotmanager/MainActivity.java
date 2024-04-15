@@ -1,10 +1,13 @@
 package com.example.hotspotmanager;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -19,9 +22,22 @@ import android.os.Handler;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "HotspotManager";
@@ -33,6 +49,22 @@ public class MainActivity extends AppCompatActivity {
     private boolean isWifiP2pEnabled = false;
     private boolean isHotspotEnabled = false;
     private int connectedDeviceCount = 0;
+    private DatePickerDialog datePickerDialog;
+    private Button dateButton;
+    private String selectedDate;
+    private String lastKey = null;
+
+    private final List<String> connectedDevicesList = new ArrayList<>();
+
+    private final Handler handler = new Handler();
+    private final Runnable clearListRunnable = new Runnable() {
+        @Override
+        public void run() {
+            connectedDevicesList.clear();
+            handler.postDelayed(this, 24 * 60 * 60 * 1000); // Schedule clearing after 24 hours
+        }
+    };
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -42,7 +74,13 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textViewLog);
         textView.setMovementMethod(new ScrollingMovementMethod());
         textView = findViewById(R.id.textViewDevices);
+        initDatePicker();
         textView.setMovementMethod(new ScrollingMovementMethod());
+        dateButton = findViewById(R.id.datePickerButton);
+        dateButton.setText(getTodaysDate());
+
+
+        handler.postDelayed(clearListRunnable, 24 * 60 * 60 * 1000);
 
         intentFilter = new IntentFilter();
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -64,6 +102,82 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private String getTodaysDate()
+    {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        month = month + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        return makeDateString(day, month, year);
+    }
+
+    private void initDatePicker()
+    {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day)
+            {
+                month = month + 1;
+                String date = makeDateString(day, month, year);
+                dateButton.setText(date);
+                selectedDate = date;
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_LIGHT;
+
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+        //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+    }
+
+    private String makeDateString(int day, int month, int year)
+    {
+        return getMonthFormat(month) + " " + day + " " + year;
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if(month == 1)
+            return "JAN";
+        if(month == 2)
+            return "FEB";
+        if(month == 3)
+            return "MAR";
+        if(month == 4)
+            return "APR";
+        if(month == 5)
+            return "MAY";
+        if(month == 6)
+            return "JUN";
+        if(month == 7)
+            return "JUL";
+        if(month == 8)
+            return "AUG";
+        if(month == 9)
+            return "SEP";
+        if(month == 10)
+            return "OCT";
+        if(month == 11)
+            return "NOV";
+        if(month == 12)
+            return "DEC";
+
+        //default should never happen
+        return "JAN";
+    }
+
+    public void openDatePicker(View view)
+    {
+        datePickerDialog.show();
+    }
     @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -200,6 +314,39 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void updateFirebase(View view){
+        if (selectedDate != null && connectedDevicesList.size() > 0) {
+            // Get a reference to your Firebase database
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://attendencetracker-c7c0c-default-rtdb.firebaseio.com/");
+
+            // If lastKey is not null, remove the old value from Firebase
+            if (lastKey != null) {
+                databaseReference.child("connected_devices").child(selectedDate).child(lastKey).removeValue();
+            }
+
+            // Create a new key for the data
+            String key = databaseReference.child("connected_devices").child(selectedDate).push().getKey();
+
+            // Update the data in the database
+            databaseReference.child("connected_devices").child(selectedDate).child(key).setValue(connectedDevicesList)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            outputLog("Data updated successfully\n");
+                            lastKey = key; // Update lastKey with the new key
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            outputLog("Failed to update data: " + e.getMessage() + "\n");
+                        }
+                    });
+        } else {
+            outputLog("No data to update\n");
+        }
+    }
+
     public void onButtonUpdateTapped(View view){
         outputLog("updating connected device list...\n");
         updateConnectedDeviceList();
@@ -212,11 +359,18 @@ public class MainActivity extends AppCompatActivity {
         manager.requestGroupInfo(channel, new WifiP2pManager.GroupInfoListener() {
             @Override
             public void onGroupInfoAvailable(WifiP2pGroup wifiP2pGroup) {
+                // Clear the list if necessary
+                if (connectedDevicesList.size() > 0) {
+                    connectedDevicesList.clear();
+                }
+
                 TextView textViewDevices = findViewById(R.id.textViewDevices);
                 textViewDevices.setText("");
                 int i = 0;
                 for(WifiP2pDevice client : wifiP2pGroup.getClientList()){
-                    textViewDevices.append("  Device" + ++i + ":  " + client.deviceAddress + "\n");
+                    String deviceInfo = "  Device" + ++i + ":  " + client.deviceAddress + "\n";
+                    textViewDevices.append(deviceInfo);
+                    connectedDevicesList.add(deviceInfo);
                 }
                 if(i > connectedDeviceCount){
                     outputLog("device connected\n");
@@ -228,6 +382,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void outputLog(String msg){
         TextView textViewLog = findViewById(R.id.textViewLog);
