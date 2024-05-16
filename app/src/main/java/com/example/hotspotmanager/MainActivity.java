@@ -37,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -321,26 +322,56 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void updateFirebase(View view){
-        if (selectedDate != null && connectedDevicesList.size() > 0) {
-            // Get a reference to your Firebase database
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://attendencetracker-c7c0c-default-rtdb.firebaseio.com/");
+    public void updateConnectedDeviceList() {
+        if (!isHotspotEnabled) {
+            outputLog("Hotspot is not enabled\n");
+            return;
+        }
+        manager.requestGroupInfo(channel, new WifiP2pManager.GroupInfoListener() {
+            @Override
+            public void onGroupInfoAvailable(WifiP2pGroup wifiP2pGroup) {
+                if (wifiP2pGroup == null) {
+                    outputLog("No group info available\n");
+                    return;
+                }
 
-            // If lastKey is not null, remove the old value from Firebase
-            if (lastKey != null) {
-                databaseReference.child("connected_devices").child(selectedDate).child(lastKey).removeValue();
+                // Clear the list if necessary
+                connectedDevicesList.clear();
+                outputLog("Connected devices list cleared\n");
+
+                TextView textViewDevices = findViewById(R.id.textViewDevices);
+                textViewDevices.setText("");
+                int i = 0;
+
+                for (WifiP2pDevice client : wifiP2pGroup.getClientList()) {
+                    String deviceInfo = "Device" + ++i + ": " + client.deviceAddress + "\n";
+                    textViewDevices.append(deviceInfo);
+                    connectedDevicesList.add(client.deviceAddress);  // Add the MAC address to the list
+                    outputLog("Added device: " + client.deviceAddress + "\n");
+                }
+
+                if (i > connectedDeviceCount) {
+                    outputLog("Device connected\n");
+                    connectedDeviceCount = i;
+                } else if (i < connectedDeviceCount) {
+                    outputLog("Device disconnected\n");
+                    connectedDeviceCount = i;
+                }
             }
+        });
+    }
 
-            // Create a new key for the data
-            String key = databaseReference.child("connected_devices").child(selectedDate).push().getKey();
+    public void updateFirebase(View view) {
+        outputLog("Updating Firebase...\n");
+        if (selectedDate != null && !connectedDevicesList.isEmpty()) {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance()
+                    .getReferenceFromUrl("https://attendencetracker-c7c0c-default-rtdb.firebaseio.com/");
 
-            // Update the data in the database
-            databaseReference.child("connected_devices").child(selectedDate).child(key).setValue(connectedDevicesList)
+            databaseReference.child("connected_devices").child(selectedDate).setValue(connectedDevicesList)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             outputLog("Data updated successfully\n");
-                            lastKey = key; // Update lastKey with the new key
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -350,45 +381,17 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            outputLog("No data to update\n");
+            outputLog("No data to update or date not selected\n");
         }
     }
+
 
     public void onButtonUpdateTapped(View view){
         outputLog("updating connected device list...\n");
         updateConnectedDeviceList();
     }
 
-    public void updateConnectedDeviceList(){
-        if(!isHotspotEnabled){
-            return;
-        }
-        manager.requestGroupInfo(channel, new WifiP2pManager.GroupInfoListener() {
-            @Override
-            public void onGroupInfoAvailable(WifiP2pGroup wifiP2pGroup) {
-                // Clear the list if necessary
-                if (connectedDevicesList.size() > 0) {
-                    connectedDevicesList.clear();
-                }
 
-                TextView textViewDevices = findViewById(R.id.textViewDevices);
-                textViewDevices.setText("");
-                int i = 0;
-                for(WifiP2pDevice client : wifiP2pGroup.getClientList()){
-                    String deviceInfo = "  Device" + ++i + ":  " + client.deviceAddress + "\n";
-                    textViewDevices.append(deviceInfo);
-                    connectedDevicesList.add(deviceInfo);
-                }
-                if(i > connectedDeviceCount){
-                    outputLog("device connected\n");
-                    connectedDeviceCount = i;
-                }else if(i < connectedDeviceCount){
-                    outputLog("device disconnected\n");
-                    connectedDeviceCount = i;
-                }
-            }
-        });
-    }
 
 
     private void outputLog(String msg){
