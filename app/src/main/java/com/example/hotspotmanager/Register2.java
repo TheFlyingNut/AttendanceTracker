@@ -3,105 +3,141 @@ package com.example.hotspotmanager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class Register2 extends AppCompatActivity {
 
-    private EditText editTextName, editTextEmail, editTextSapId, editTextMacAddress;
-    private Button buttonSubmit;
-    private TextView textViewMacAddress;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://attendencetracker-c7c0c-default-rtdb.firebaseio.com/");
+    private TextInputEditText editTextName, editTextEmail, editTextPassword, editTextSapId, editTextMacAddress;
+    private Button buttonReg;
+    private FirebaseAuth mAuth;
+    private ProgressBar progressBar;
+    private TextView textView;
+    private DatabaseReference databaseReference;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register2);
+        setContentView(R.layout.activity_register1);
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        // Initialize views
         editTextName = findViewById(R.id.editTextName);
         editTextEmail = findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextTextPassword);
         editTextSapId = findViewById(R.id.editTextSapId);
         editTextMacAddress = findViewById(R.id.editTextMacAddress);
-        buttonSubmit = findViewById(R.id.buttonSubmit);
-        textViewMacAddress = findViewById(R.id.textViewMacAddress);
-        Button buttonShowMacAddress = findViewById(R.id.buttonShowMacAddress);
+        buttonReg = findViewById(R.id.btn_register);
+        progressBar = findViewById(R.id.progressBar);
+        textView = findViewById(R.id.loginNow);
 
-        // Set OnClickListener for the button
-        buttonShowMacAddress.setOnClickListener(v -> showMacAddress());
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String name = editTextName.getText().toString();
-                String email = editTextEmail.getText().toString();
-                String sapId = editTextSapId.getText().toString();
-                String macAddress = editTextMacAddress.getText().toString();
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Login1.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
-                // TODO: Send data to Firebase
-
-                if(name.isEmpty() || email.isEmpty() || sapId.isEmpty() || macAddress.isEmpty()){
-                    Toast.makeText(Register2.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.hasChild(sapId)){
-                                Toast.makeText(Register2.this, "SapID already registered", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                //Sending data to firebase
-                                databaseReference.child("users").child(sapId).child("name").setValue(name);
-                                databaseReference.child("users").child(sapId).child("email").setValue(email);
-                                databaseReference.child("users").child(sapId).child("macAddress").setValue(macAddress);
-                                Toast.makeText(Register2.this, "Information successfully registered", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-                }
+        buttonReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerUser();
             }
         });
     }
 
-    private void showMacAddress() {
-        // Get WifiManager
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+    private void registerUser() {
+        String name = editTextName.getText().toString().trim();
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        String sapId = editTextSapId.getText().toString().trim();
+        String macAddress = editTextMacAddress.getText().toString().trim();
 
-        // Check if WifiManager is not null
-        if (wifiManager != null) {
-            // Get WifiInfo
-            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-            if (wifiInfo != null) {
-                // Get MAC address
-                String macAddress = wifiInfo.getMacAddress();
-                // Display MAC address
-                textViewMacAddress.setText("MAC Address: " + macAddress);
-            } else {
-                // WifiInfo is null
-                textViewMacAddress.setText("WifiInfo is null");
-            }
-        } else {
-            // WifiManager is null
-            textViewMacAddress.setText("WifiManager is null");
+        if (TextUtils.isEmpty(name)) {
+            Toast.makeText(Register2.this, "Name is required.", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(Register2.this, "Email is required.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(Register2.this, "Password is required.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(sapId)) {
+            Toast.makeText(Register2.this, "SAP ID is required.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (TextUtils.isEmpty(macAddress)) {
+            Toast.makeText(Register2.this, "MAC Address is required.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                String userId = user.getUid();
+                                DatabaseReference currentUserDb = databaseReference.child(userId);
+
+                                currentUserDb.child("name").setValue(name);
+                                currentUserDb.child("email").setValue(email);
+                                currentUserDb.child("sapId").setValue(sapId);
+                                currentUserDb.child("macAddress").setValue(macAddress);
+
+                                Toast.makeText(Register2.this, "Account Created.",
+                                        Toast.LENGTH_SHORT).show();
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        } else {
+                            Toast.makeText(Register2.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

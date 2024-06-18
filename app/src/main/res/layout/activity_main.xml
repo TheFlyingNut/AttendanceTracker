@@ -5,223 +5,291 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="horizontal">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textViewDevices"
-        android:layout_width="405dp"
-        android:layout_height="94dp"
-        android:background="@drawable/border"
-        android:scrollbars="vertical"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#343434"
+        tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Connected Devices"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLog" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/top_background"
+            tools:layout_editor_absoluteY="-4dp" />
 
-    <Button
-        android:id="@+id/buttonStop"
-        android:layout_width="147dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="72dp"
-        android:onClick="onButtonStopTapped"
-        android:text="Stop"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-    <EditText
-        android:id="@+id/editSSID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="myhotspot"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="111dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="20dp"
-        android:text="Password"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/editPassword"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="66dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="40dp"
-        android:text="SSID"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toStartOf="@+id/editSSID"
-        app:layout_constraintHorizontal_bias="0.985"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="mypassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.631"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editSSID" />
+        <TextView
+            android:id="@+id/textViewDevices"
+            android:layout_width="391dp"
+            android:layout_height="105dp"
+            android:layout_marginTop="19dp"
+            android:background="@drawable/rounded_border"
+            android:scrollbars="vertical"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
 
-    <Button
-        android:id="@+id/buttonStart"
-        android:layout_width="147dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="72dp"
-        android:onClick="onButtonStartTapped"
-        android:text="Start"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Connected Devices"
+            android:textColor="#E1A500"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewLog" />
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="247dp"
-        android:layout_height="39dp"
-        android:layout_marginTop="24dp"
-        android:checkedButton="@id/radioButton2G"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPassword">
-
-        <RadioButton
-            android:id="@+id/radioButton2G"
-            android:layout_width="122dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="2.4GHz"
-            android:textSize="20sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton5G"
-            android:layout_width="125dp"
-            android:layout_height="36dp"
-            android:text="5GHz"
-            android:textSize="20sp" />
-
-    </RadioGroup>
+        <EditText
+            android:id="@+id/editSSID"
+            android:layout_width="226dp"
+            android:layout_height="47dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edittext_background"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:padding="10dp"
+            android:text="myhotspot"
+            android:textColor="#E1A500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.874"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="36dp"
-        android:layout_marginEnd="32dp"
-        android:text="Select Date:"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="128dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:text="Password:"
+            android:textColor="#E1A500"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/editPassword"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editSSID" />
 
-        app:layout_constraintBottom_toTopOf="@+id/buttonStart"
-        app:layout_constraintEnd_toStartOf="@+id/datePickerButton"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintVertical_bias="0.488" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="60dp"
+            android:layout_height="31dp"
+            android:layout_marginTop="8dp"
+            android:text="SSID:"
+            android:textColor="#E1A500"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/editSSID"
+            app:layout_constraintHorizontal_bias="0.858"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editSSID" />
 
-    <Button
-        android:id="@+id/datePickerButton"
-        style="?android:spinnerStyle"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:onClick="openDatePicker"
-        android:text="JAN 01 2024"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonStop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.981"
-        app:layout_constraintLeft_toLeftOf="parent"
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="219dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/edittext_background"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="mypassword"
+            android:textColor="#E1A500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.837"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editSSID" />
 
-        app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="247dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="190dp"
+            android:checkedButton="@id/radioButton2G"
+            android:orientation="horizontal"
+            android:textColor="#E1A500"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView3">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="21dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="36dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+            <RadioButton
+                android:id="@+id/radioButton2G"
+                android:layout_width="122dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="2.4GHz"
+                android:textColor="#E1A500"
+                android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="Log"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+            <RadioButton
+                android:id="@+id/radioButton5G"
+                android:layout_width="125dp"
+                android:layout_height="36dp"
+                android:text="5GHz"
+                android:textColor="#E1A500"
+                android:textSize="20sp" />
+        </RadioGroup>
 
-    <TextView
-        android:id="@+id/textViewLog"
-        android:layout_width="407dp"
-        android:layout_height="173dp"
-        android:background="@drawable/border"
-        android:scrollbars="vertical"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.727"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Select Date:"
+            android:textColor="#E1A500"
 
-    <Button
-        android:id="@+id/buttonUpdate"
-        android:layout_width="106dp"
-        android:layout_height="63dp"
-        android:onClick="onButtonUpdateTapped"
-        android:text="Update"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSubmit"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDevices" />
 
-    <Button
-        android:id="@+id/buttonSubmit"
-        android:layout_width="137dp"
-        android:layout_height="62dp"
-        android:layout_marginEnd="56dp"
-        android:onClick="updateFirebase"
-        android:text="UPDATE DATABASE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDevices"
-        app:layout_constraintVertical_bias="0.0" />
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/datePickerButton"
+            app:layout_constraintHorizontal_bias="0.357"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/datePickerButton" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/datePickerButton"
+            style="?android:spinnerStyle"
+            android:layout_width="249dp"
+            android:layout_height="52dp"
+            android:onClick="openDatePicker"
+            android:text="JAN 01 2024"
+            android:textColor="#E1A500"
+            android:textSize="18sp"
+
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="21dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="36dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="Log"
+            android:textColor="#E1A500"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textViewLog"
+            android:layout_width="383dp"
+            android:layout_height="153dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/rounded_border"
+            android:gravity="bottom"
+            android:scrollbars="vertical"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.571"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonUpdate"
+            android:layout_width="157dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginEnd="216dp"
+            android:background="@drawable/background_btn_1"
+            android:onClick="onButtonUpdateTapped"
+            android:text="Update"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textViewDevices"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDevices"
+            app:layout_constraintVertical_bias="0.114" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonSubmit"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_btn_1"
+            android:onClick="updateFirebase"
+            android:text="UPLOAD"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.322"
+            app:layout_constraintStart_toEndOf="@+id/buttonUpdate"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDevices" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Network Bandwidth:"
+            android:textColor="#E1A500"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+            app:layout_constraintEnd_toEndOf="@+id/editPassword"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/editPassword" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="99dp"
+            android:layout_height="57dp"
+            android:scaleX="2.5"
+            android:scaleY="2.5"
+            android:thumb="@drawable/ic_thumb"
+            android:track="@drawable/bg_track"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.248"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView4"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button"
+            android:layout_width="352dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_btn_1"
+            android:drawableStart="@drawable/cloud_arrow_down"
+            android:paddingLeft="60dp"
+            android:paddingRight="80dp"
+            android:text="Download PDF"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/buttonSubmit"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/buttonUpdate"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSubmit" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/btn_dialog"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="6dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

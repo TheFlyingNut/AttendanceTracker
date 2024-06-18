@@ -7,4 +7,7 @@
     <string name="register">Register</string>
     <string name="click_to_login">Click to Login</string>
     <string name="mac_address_xx_xx_xx_xx_xx_xx">MAC Address: XX:XX:XX:XX:XX:XX</string>
+    <string name="seminar_hall_image">Seminar Hall</string>
+    <string name="seminar_hall_description">This is a description of the seminar hall. It is available for booking.</string>
+    <string name="book_hall">Book Hall</string>
 </resources>

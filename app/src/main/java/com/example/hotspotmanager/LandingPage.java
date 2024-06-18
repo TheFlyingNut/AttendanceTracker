@@ -7,6 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
 public class LandingPage extends AppCompatActivity {
 
@@ -14,11 +15,11 @@ public class LandingPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
-        Button login1Button = findViewById(R.id.Login1);
-        Button login2Button = findViewById(R.id.Login2);
+        ImageView myImageView = findViewById(R.id.imageView2);
+        ImageView myImageView2 = findViewById(R.id.imageView6);
 
         // Set an OnClickListener for the Login1 button
-        login1Button.setOnClickListener(new View.OnClickListener() {
+        myImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the Login1 activity
@@ -27,7 +28,7 @@ public class LandingPage extends AppCompatActivity {
             }
         });
 
-        login2Button.setOnClickListener(new View.OnClickListener() {
+        myImageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LandingPage.this, Register2.class);

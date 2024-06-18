@@ -1,75 +1,109 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#343434"
     android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Attendance Form"
-            android:textStyle="bold"
-            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:padding="10dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            />
+            android:text="Attendance Form"
+            android:textColor="#E1A500"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <EditText
+            android:textColor="@color/black"
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/custom_edittext"
             android:hint="Name"
+            android:textColorHint="@color/black"
             android:inputType="textPersonName"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_edittext"/>
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+        android:textColor="#E1A500"
+            android:text="Password:" />
 
         <EditText
+            android:id="@+id/editTextTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_marginBottom="10sp"
+            android:background="@drawable/custom_edittext"
+            android:ems="10"
+            android:hint=">>>>>>>"
+            android:inputType="textPassword"
+            android:padding="20dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            tools:text="@tools:sample/first_names" />
+
+        <EditText
+            android:textColor="@color/black"
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_edittext"/>
+            android:background="@drawable/custom_edittext"
+            android:hint="Email"
+            android:textColorHint="@color/black"
+            android:inputType="textEmailAddress"
+            android:padding="10dp" />
 
         <EditText
+            android:textColor="@color/black"
             android:id="@+id/editTextSapId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="SAP ID"
-            android:inputType="number"
-            android:padding="10dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_edittext"/>
+            android:background="@drawable/custom_edittext"
+            android:hint="SAP ID"
+            android:textColorHint="@color/black"
+            android:inputType="number"
+            android:padding="10dp" />
 
         <EditText
+            android:textColor="@color/black"
             android:id="@+id/editTextMacAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="MAC Address"
-            android:inputType="text"
-            android:padding="10dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_edittext"/>
+            android:background="@drawable/custom_edittext"
+            android:hint="MAC Address"
+            android:textColorHint="@color/black"
+            android:inputType="text"
+            android:padding="10dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/background_btn_1"
             android:text="Submit"
+            android:textSize="20sp"
             android:textColor="#FFFFFF" />
 
         <TextView
@@ -77,22 +111,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="MAC Address: XX:XX:XX:XX:XX:XX"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:padding="8dp"
             android:background="@drawable/textview_background"
+            android:padding="8dp"
+            android:text="MAC Address: XX:XX:XX:XX:XX:XX"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonShowMacAddress" />
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonShowMacAddress"
             android:layout_width="341dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/button_background"
+            android:background="@drawable/background_btn_1"
             android:gravity="center"
             android:paddingStart="16dp"
             android:paddingTop="12dp"
